@@ -4,16 +4,17 @@ const app = express()
 const cors = require("cors")
 const morgan = require("morgan")
 const connectDB = require("./db/db")
+const routes = require("./routes/index")
 app.use(cors())
 app.use(express.json())
 app.use(morgan("dev"))
-app.use(notFound)
 
+app.use(routes)
 
 app.get("/" , (req,res,next) =>{
     res.json({message: "Tour management system"})
 })
-
+app.use(notFound)
 app.use(globalErrorHandler)
 
 

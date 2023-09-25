@@ -2,10 +2,11 @@ const {Schema, model} = require("mongoose")
 
 
 
-const TourSchema = new Schema({
+const tourSchema = new Schema({
     name : {
         type : String ,
         require: true ,
+        unique: true,
         min: 10 ,
         max : 100
     },
@@ -52,10 +53,13 @@ const TourSchema = new Schema({
     availableSeats : {
         type : Number ,
         require: true ,
-        min : 10 ,
+        min : 5 ,
     }
       
 }, {timestamps : true})
 
 
-const Tour = model("Tour" , TourSchema)
+const Tour = model("Tour" , tourSchema)
+
+
+module.exports = Tour
