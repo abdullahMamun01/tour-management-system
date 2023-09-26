@@ -1,5 +1,5 @@
 const Tour = require("../models/Tour")
-const { createTour, findAllTours, findTourById, updateTourBYId } = require("../service/tourService")
+const { createTour, findAllTours, findTourById, updateTourBYId,deleteImageByUrlService } = require("../service/tourService")
 const error = require("../utils/error")
 
 const getTours = async (req, res, next) => {
@@ -62,12 +62,30 @@ const deleteTourById = async (req, res, next) => {
         next(e)
     }
 }
+const deleteImageByUrl = async (req, res, next) => {
+    const {tourID} = req.params;
+    const {imageUrl} = req.query;
+  
+    
+    try {
+    
+      const deleteTourImage = await  deleteImageByUrlService(tourID, imageUrl)
+      
+      if (deleteTourImage.nModified === 0) throw error("image not match " , 404)
+        // if(deleteTourImage.nModified === 0) throw error("image not found" , 404)
+      return res.status(200).json({ message: "Successfully deleted the image" });
+    } catch (e) {
 
-
+      next(e);
+    }
+  }
+  
+  
 module.exports = {
     getTours,
     getTourById,
     patchTourById,
     postTour,
-    deleteTourById
+    deleteTourById,
+    deleteImageByUrl
 }
