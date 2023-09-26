@@ -8,7 +8,7 @@ router.get("/" , getTours )
 
 router.post("/" , postTour)
 router.patch("/:tourID" , patchTourById)
-router.delete("/:tourID" , deleteTourById)
 router.get("/:tourID" , getTourById)
+router.delete("/:tourID" , deleteTourById)
 
 module.exports = router

@@ -1,4 +1,5 @@
 const Tour = require("../models/Tour")
+const error = require("../utils/error")
 
 
 const createTour = ({
@@ -33,8 +34,18 @@ const createTour = ({
 const findAllTours = () =>{
     return Tour.find({})
 }
+const findTourById = ({tourID}) =>{
+    return Tour.findById({_id : tourID})
+}
+
+const updateTourBYId = (id,updateData) =>{
+    const update = Tour.findOneAndUpdate({_id : id} , {...updateData} , {new: true})
+    return update
+}
 
 module.exports = {
     createTour,
-    findAllTours
+    findAllTours ,
+    findTourById,
+    updateTourBYId
 }

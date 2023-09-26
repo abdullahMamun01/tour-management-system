@@ -1,61 +1,66 @@
 const Tour = require("../models/Tour")
-const { createTour, findAllTours } = require("../service/tourService")
+const { createTour, findAllTours, findTourById, updateTourBYId } = require("../service/tourService")
+const error = require("../utils/error")
 
 const getTours = async (req, res, next) => {
     try {
         const tours = await findAllTours()
-        return res.status(200).json({data: tours})
+        return res.status(200).json({ total: tours.length, data: tours })
     } catch (e) {
         next(e)
     }
 }
-const getTourById = (req, res, next) => {
+const getTourById = async (req, res, next) => {
+    const {tourID} = req.params
 
+    try {
+        const tour = await findTourById({ tourID })
+        if (!tour) {
+            throw error("not found", 400)
+        }
+        return res.status(200).json({ data: tour })
+    } catch (e) {
+        next(e)
+    }
 }
-//update a tour
-const patchTourById = (req, res, next) => {
-
+//update a tour by given id
+const patchTourById = async (req, res, next) => {
+    const {tourID} = req.params
+    try {
+        let tour = await findTourById({ tourID })
+        if (!tour) {
+            throw error("not found", 400)
+        }
+        tour = await updateTourBYId(tourID,req.body)
+        return res.status(200).json({ data: tour })
+    } catch (e) {
+        next(e)
+    }
 }
 
 //create a tour 
 const postTour = async (req, res, next) => {
-    const {
-        name,
-        status,
-        country,
-        location,
-        places,
-        duration,
-        images,
-        price,
-        description,
-        availableSeats
-    } = req.body
 
     try {
         const tour = createTour(
-            {
-                name,
-                status,
-                country,
-                location,
-                places,
-                duration,
-                images,
-                price,
-                description,
-                availableSeats
-            }
+            req.body
         )
         await tour.save()
-        return res.status(201).json({data : tour})
+        return res.status(201).json({ data: tour })
     } catch (e) {
         next(e)
     }
 }
 
-const deleteTourById = (req, res, next) => {
-
+const deleteTourById = async (req, res, next) => {
+    const {tourID} = req.params
+    try {
+        let tour = await findTourById({ tourID })
+        await tour.deleteOne();
+        return res.status(204).json({message:"Delete a tour successfully"})
+    } catch (e) {
+        next(e)
+    }
 }
 
 
