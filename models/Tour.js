@@ -13,8 +13,9 @@ const tourSchema = new Schema({
     status :{
         type : String,
         require: true ,
-        enum : ["available" , "not available"] ,
-        default : "available" ,
+        enum : ["AVAILABLE" , "NOT AVAILABLE"] ,
+        default : "AVAILABLE" ,
+        // uppercase: true
     },
     country : {
         type : String ,
