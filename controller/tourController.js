@@ -24,7 +24,7 @@ const getTourById = async (req, res, next) => {
     const { tourID } = req.params
 
     try {
-        const tour = await findTourById({ tourID })
+        const tour = await findTourById( tourID )
         if (!tour) {
             throw error("not found", 400)
         }

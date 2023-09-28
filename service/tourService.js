@@ -17,7 +17,7 @@ const createTour = ({
 
     const tour = new Tour({
         name,
-        status,
+        status ,
         country,
         location,
         places,
@@ -34,8 +34,8 @@ const createTour = ({
 const findAllTours = () => {
     return  Tour.find({ status: /^available$/i }).exec();
 }
-const findTourById = ({ tourID }) => {
-    return Tour.findById({ _id: tourID })
+const findTourById =  ( tourID ) => {
+    return Tour.findById(tourID)
 }
 
 const updateTourBYId = (id, updateData) => {
