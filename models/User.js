@@ -34,9 +34,10 @@ const userSchema = new Schema(
             minLength: [6, "password must be at least 6 character"],
         },
         roles: {
-            type: [String],
+            type: String,
             required: true,
-            default: ['USER'],
+            enum :["USER" ,"ADMIN"],
+            default: 'USER',
         },
     },
     {timestamps: true}

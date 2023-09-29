@@ -65,7 +65,9 @@ const postTour = async (req, res, next) => {
 const deleteTourById = async (req, res, next) => {
     const { tourID } = req.params
     try {
+
         let tour = await findTourById({ tourID })
+        if(!tour) throw error("The tour id is not valid" , 404)
         await tour.deleteOne();
         return res.status(204).json({ message: "Delete a tour successfully" })
     } catch (e) {
@@ -75,14 +77,10 @@ const deleteTourById = async (req, res, next) => {
 const deleteImageByUrl = async (req, res, next) => {
     const { tourID } = req.params;
     const { imageUrl } = req.query;
-
-
     try {
-
+        
         const deleteTourImage = await deleteImageByUrlService(tourID, imageUrl)
-
-        if (deleteTourImage.nModified === 0) throw error("image not match ", 404)
-        // if(deleteTourImage.nModified === 0) throw error("image not found" , 404)
+        if (deleteTourImage.nModified === 0) throw error("image is not update ", 400)
         return res.status(200).json({ message: "Successfully deleted the image" });
     } catch (e) {
 

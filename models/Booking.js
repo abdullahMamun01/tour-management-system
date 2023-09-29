@@ -1,4 +1,5 @@
-const { Schema, model } = require("mongoose")
+const mongoose = require("mongoose")
+const { Schema, model } = mongoose
 
 
 const bookingSchema = new Schema(
@@ -25,6 +26,6 @@ const bookingSchema = new Schema(
 )
 
 
-const Booking = model("Booking" , bookingSchema)
+const Booking = mongoose.model("Booking" , bookingSchema)
 
 module.exports = Booking
